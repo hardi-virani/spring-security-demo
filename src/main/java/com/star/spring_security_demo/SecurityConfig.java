@@ -6,10 +6,20 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+//    private UserDetails User;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -19,7 +29,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(request -> request.anyRequest().authenticated()); //this means we are enableing askin username password for any request.
 //        http.formLogin(Customizer.withDefaults()); //we dont need when you have stateless
-        http.httpBasic(Customizer.withDefaults());
+        http.httpBasic(Customizer.withDefaults()); // This will give the popup instead of the sign in page.
 
         //making stateless, because it is making stateful by default, basically we want to get new session
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -27,5 +37,32 @@ public class SecurityConfig {
         return http.build();
 
     }
+
+    //These is something i got from gpt, because one method called withdefaultPasswordEncoder is not working because that is removed in the new spring version.
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+
+        UserDetails user = User.builder()
+                .username("star")
+                .password(passwordEncoder().encode("123@123"))
+                .roles("USER")
+                .build();
+
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password(passwordEncoder().encode("1234@"))
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(user, admin);
+
+    }
+
+
 
 }
