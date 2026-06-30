@@ -43,10 +43,10 @@ public class SecurityConfig {
     }
 
     //These is something i got from gpt, because one method called withdefaultPasswordEncoder is not working because that is removed in the new spring version.
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
 //    @Bean
 //    public UserDetailsService userDetailsService() {
@@ -86,8 +86,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
 
 //        provider.setUserDetailsPasswordService((UserDetailsPasswordService) userDetailsService);
-
-        provider.setPasswordEncoder(passwordEncoder());
+        provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
 
         return provider;
 
@@ -95,3 +94,18 @@ public class SecurityConfig {
 
 
 }
+
+
+// encoded (student)
+//id =2
+//username = hardi
+//password = 1@2
+//
+
+
+//encoded registered
+//id = 4
+//username = john
+//password = j@12
+
+//mann & star won't work because their passwords are in plaintext.
