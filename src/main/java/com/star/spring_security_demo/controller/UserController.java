@@ -16,8 +16,6 @@ public class UserController {
     @PostMapping("register")
     public User register(@RequestBody User user) {
 
-
-
         return service.saveUser(user);
     }
 }

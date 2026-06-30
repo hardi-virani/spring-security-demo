@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SpringSecurityDemoApplication {
 
 	public static void main(String[] args) {
-		System.out.println("encoded pass" + new BCryptPasswordEncoder().encode("1@2"));
+		System.out.println("encoded pass" + new BCryptPasswordEncoder().encode("1@2")); //not a good idea for production.
 		SpringApplication.run(SpringSecurityDemoApplication.class, args);
 	}
 
