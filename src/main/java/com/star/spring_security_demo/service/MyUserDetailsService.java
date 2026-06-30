@@ -2,6 +2,7 @@ package com.star.spring_security_demo.service;
 
 import com.star.spring_security_demo.dao.UserRepo;
 import com.star.spring_security_demo.model.User;
+import com.star.spring_security_demo.model.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,7 +27,7 @@ public class MyUserDetailsService  implements UserDetailsService {
         }
 
 
-        return ;
+        return new UserPrincipal(user);
 
     }
 }
