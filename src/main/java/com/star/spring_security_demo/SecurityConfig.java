@@ -68,28 +68,20 @@ public class SecurityConfig {
 //    }
 
 
-//
-//    @Autowired
-//
-//    private PasswordEncoder passwordEncoder;
-
-//    @Bean
-//    public AuthenticationProvider authProvider() {
-//
-//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService); //This will basically connect to our DB.
-//
-//        provider.setuserDetailsService(userDetailsService);
-//        provider.setPasswordEncoder(passwordEncoder);
-//
-//        return provider;
-//
-//    }
 
     @Autowired
+    //5. the userdetailservie is an interface. and we have to implement it, and the way we have implemented it by creating, MyUserDetailService.java (to go MyUserDetailsService.java)
     private UserDetailsService userDetailsService;
+
+    //1. what we were trying to achieve is, we were trying to authenticate users from the DB and the way to achieve that is, we need to change our authenticate provider.
+    //2.  And we want to say that we want to connect to DB.
+
 
     @Bean
     public AuthenticationProvider authProvider() {
+
+        //3. to connect with DB, we use DAO authentication provider, because DAO is your DB access
+        //4. And then to achieve that we have to specify the userdetailservice.
 
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
 
